@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="EntityDefinition" load_steps=7 format=3 uid="uid://ca6kb5031wem1"]
+
+[ext_resource type="Texture2D" uid="uid://beypni7mse80g" path="res://assets/resources/default_death_texture.tres" id="1_jtfpa"]
+[ext_resource type="Script" path="res://src/entities/entity_definition.gd" id="1_mn1qi"]
+[ext_resource type="Script" path="res://src/entities/actors/components/component_definitions/fighter_component_definition.gd" id="1_wuaiq"]
+[ext_resource type="Texture2D" uid="uid://drjbefgnsj1xu" path="res://assets/curses_vector_24x36.png" id="2_kqi01"]
+
+[sub_resource type="Resource" id="Resource_b46lm"]
+script = ExtResource("1_wuaiq")
+max_hp = 10
+power = 3
+defense = 0
+death_texture = ExtResource("1_jtfpa")
+death_color = Color(0.545098, 0, 0, 1)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s83ec"]
+atlas = ExtResource("2_kqi01")
+region = Rect2(48, 252, 24, 36)
+
+[resource]
+script = ExtResource("1_mn1qi")
+name = "Rat"
+texture = SubResource("AtlasTexture_s83ec")
+color = Color(0.976953, 0.892561, 0.622332, 1)
+is_blocking_movement = true
+type = 2
+fighter_definition = SubResource("Resource_b46lm")
+ai_type = 1

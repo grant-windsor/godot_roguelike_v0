@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="EntityDefinition" load_steps=7 format=3 uid="uid://dsupkw2yijocs"]
+
+[ext_resource type="Texture2D" uid="uid://beypni7mse80g" path="res://assets/resources/default_death_texture.tres" id="1_15xyp"]
+[ext_resource type="Script" path="res://src/entities/entity_definition.gd" id="1_lm0dx"]
+[ext_resource type="Script" path="res://src/entities/actors/components/component_definitions/fighter_component_definition.gd" id="1_rdvai"]
+[ext_resource type="Texture2D" uid="uid://drjbefgnsj1xu" path="res://assets/curses_vector_24x36.png" id="2_fn8kq"]
+
+[sub_resource type="Resource" id="Resource_4ine8"]
+script = ExtResource("1_rdvai")
+max_hp = 16
+power = 4
+defense = 1
+death_texture = ExtResource("1_15xyp")
+death_color = Color(0.545098, 0, 0, 1)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jsfn7"]
+atlas = ExtResource("2_fn8kq")
+region = Rect2(240, 252, 24, 36)
+
+[resource]
+script = ExtResource("1_lm0dx")
+name = "Zombie"
+texture = SubResource("AtlasTexture_jsfn7")
+color = Color(0.247059, 0.498039, 0.247059, 1)
+is_blocking_movement = true
+type = 2
+fighter_definition = SubResource("Resource_4ine8")
+ai_type = 1

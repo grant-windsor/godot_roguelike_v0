@@ -1,0 +1,29 @@
+[gd_resource type="Resource" script_class="EntityDefinition" load_steps=7 format=3 uid="uid://c55o67yk3s3e7"]
+
+[ext_resource type="Script" path="res://src/entities/entity_definition.gd" id="1_j7e1a"]
+[ext_resource type="Texture2D" uid="uid://beypni7mse80g" path="res://assets/resources/default_death_texture.tres" id="1_m0mbq"]
+[ext_resource type="Script" path="res://src/entities/actors/components/component_definitions/fighter_component_definition.gd" id="1_rkpaf"]
+[ext_resource type="Texture2D" uid="uid://drjbefgnsj1xu" path="res://assets/curses_vector_24x36.png" id="2_1vg00"]
+
+[sub_resource type="Resource" id="Resource_csti3"]
+script = ExtResource("1_rkpaf")
+max_hp = 30
+power = 5
+defense = 2
+death_texture = ExtResource("1_m0mbq")
+death_color = Color(0.545098, 0, 0, 1)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iq66p"]
+atlas = ExtResource("2_1vg00")
+region = Rect2(0, 144, 24, 36)
+
+[resource]
+resource_name = "Player"
+script = ExtResource("1_j7e1a")
+name = "Unnamed Entity"
+texture = SubResource("AtlasTexture_iq66p")
+color = Color(1, 1, 1, 1)
+is_blocking_movement = true
+type = 2
+fighter_definition = SubResource("Resource_csti3")
+ai_type = 1

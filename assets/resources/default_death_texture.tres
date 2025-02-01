@@ -1,0 +1,7 @@
+[gd_resource type="AtlasTexture" load_steps=2 format=3 uid="uid://beypni7mse80g"]
+
+[ext_resource type="Texture2D" uid="uid://drjbefgnsj1xu" path="res://assets/curses_vector_24x36.png" id="1_vtk56"]
+
+[resource]
+atlas = ExtResource("1_vtk56")
+region = Rect2(120, 72, 24, 36)
