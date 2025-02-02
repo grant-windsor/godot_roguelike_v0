@@ -1,0 +1,39 @@
+[gd_scene load_steps=4 format=3 uid="uid://bwo1nxkl0e1hr"]
+
+[ext_resource type="FontFile" uid="uid://c8eleccfxjvht" path="res://assets/fonts/Kenney Pixel Square.ttf" id="1_jpcu5"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p45g2"]
+draw_center = false
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_dd4lu"]
+
+[node name="InventoryMenuButton" type="Button"]
+offset_right = 8.0
+offset_bottom = 8.0
+size_flags_horizontal = 0
+theme_override_colors/font_disabled_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/font_focus_color = Color(1, 1, 1, 1)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_colors/icon_normal_color = Color(1, 1, 1, 1)
+theme_override_colors/icon_focus_color = Color(1, 1, 1, 1)
+theme_override_colors/icon_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/icon_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/icon_hover_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/icon_disabled_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("1_jpcu5")
+theme_override_styles/focus = SubResource("StyleBoxFlat_p45g2")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_dd4lu")
+theme_override_styles/hover = SubResource("StyleBoxFlat_p45g2")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_p45g2")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_dd4lu")
+action_mode = 0
+shortcut_feedback = false
