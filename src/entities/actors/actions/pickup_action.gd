@@ -9,7 +9,7 @@ func perform() -> bool:
 	for item in map_data.get_items():
 		if entity.grid_position == item.grid_position:
 			if inventory.items.size() >= inventory.capacity:
-				MessageLog.send_message("Your inventory is full.", GameColors.IMPOSSIBLE)
+				MessageLog.send_message(" Your inventory is full.", GameColors.IMPOSSIBLE)
 				return false
 
 			map_data.entities.erase(item)

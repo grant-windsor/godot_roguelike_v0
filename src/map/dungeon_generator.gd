@@ -20,6 +20,7 @@ const entity_types = {
 	"rat": preload("res://assets/definitions/monsters/rat.tres"),
 	"zombie": preload("res://assets/definitions/monsters/zombie.tres"),
 	"medkit": preload("res://assets/definitions/items/health_potion_definition.tres"),
+	"lightning_grenade": preload("res://assets/definitions/items/lightning_grenade_definition.tres")
 }
 
 
@@ -100,8 +101,14 @@ func _place_entities(dungeon: MapData, room: Rect2i) -> void:
 				break
 
 		if can_place:
-			var new_entity: Entity = Entity.new(dungeon, new_entity_position, entity_types.medkit)
+			var item_chance: float = _rng.randf()
+			var new_entity: Entity
+			if item_chance < 0.7:
+				new_entity = Entity.new(dungeon, new_entity_position, entity_types.medkit)
+			else:
+				new_entity = Entity.new(dungeon, new_entity_position, entity_types.lightning_grenade)
 			dungeon.entities.append(new_entity)
+
 
 func generate_dungeon(player: Entity) -> MapData:
 	var dungeon := MapData.new(map_width, map_height, player)

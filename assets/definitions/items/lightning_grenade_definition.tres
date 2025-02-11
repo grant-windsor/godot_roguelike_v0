@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="EntityDefinition" load_steps=6 format=3 uid="uid://diat7rg3e0p11"]
+
+[ext_resource type="Script" path="res://src/entities/actors/components/component_definitions/lightning_damage_consumable_definition.gd" id="1_8775m"]
+[ext_resource type="Script" path="res://src/entities/entity_definition.gd" id="1_j0hld"]
+[ext_resource type="Texture2D" uid="uid://drjbefgnsj1xu" path="res://assets/curses_vector_24x36.png" id="3_oa52r"]
+
+[sub_resource type="Resource" id="Resource_v18qr"]
+script = ExtResource("1_8775m")
+damage = 20
+maximum_range = 5
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fft1j"]
+atlas = ExtResource("3_oa52r")
+region = Rect2(336, 72, 24, 36)
+
+[resource]
+script = ExtResource("1_j0hld")
+name = "Lightning Grenade"
+texture = SubResource("AtlasTexture_fft1j")
+color = Color(1, 0.941176, 0, 1)
+is_blocking_movement = false
+type = 1
+ai_type = 0
+consumable_definition = SubResource("Resource_v18qr")
+inventory_capacity = 0
