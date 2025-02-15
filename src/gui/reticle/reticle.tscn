@@ -1,0 +1,20 @@
+[gd_scene load_steps=2 format=3 uid="uid://dblocordiclrs"]
+
+[ext_resource type="Script" path="res://src/gui/reticle/reticle.gd" id="1_77ugp"]
+
+[node name="Reticle" type="Node2D"]
+z_index = 10
+z_as_relative = false
+script = ExtResource("1_77ugp")
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+color = Color(1, 0, 0.0166664, 0.701961)
+polygon = PackedVector2Array(0, 0, 24, 0, 24, 36, 0, 36)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(2, 2)
+
+[node name="Line2D" type="Line2D" parent="."]
+width = 2.0
+default_color = Color(1, 0, 0, 1)
+end_cap_mode = 1

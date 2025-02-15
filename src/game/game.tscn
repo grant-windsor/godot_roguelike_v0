@@ -1,5 +1,6 @@
-[gd_scene load_steps=20 format=3 uid="uid://drgnxlnejcyws"]
+[gd_scene load_steps=22 format=3 uid="uid://drgnxlnejcyws"]
 
+[ext_resource type="Script" path="res://src/game/game_root.gd" id="1_4vsf7"]
 [ext_resource type="Script" path="res://src/game/game.gd" id="1_kpppj"]
 [ext_resource type="Script" path="res://src/game/input_handlers/main_game_input_handler.gd" id="2_8gkql"]
 [ext_resource type="Script" path="res://src/game/input_handlers/input_handler.gd" id="2_gsqld"]
@@ -13,6 +14,7 @@
 [ext_resource type="Script" path="res://src/gui/mouseover_checker.gd" id="9_cuurw"]
 [ext_resource type="Script" path="res://src/gui/hp_display.gd" id="9_h1os6"]
 [ext_resource type="FontFile" uid="uid://c8eleccfxjvht" path="res://assets/fonts/Kenney Pixel Square.ttf" id="10_b3d3j"]
+[ext_resource type="PackedScene" uid="uid://dblocordiclrs" path="res://src/gui/reticle/reticle.tscn" id="11_dgstk"]
 [ext_resource type="Script" path="res://src/gui/message_log.gd" id="11_er25w"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_0vd13"]
@@ -48,6 +50,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_4vsf7")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
@@ -71,13 +74,15 @@ size = Vector2i(1200, 663)
 render_target_update_mode = 4
 
 [node name="Game" type="Node2D" parent="VBoxContainer/SubViewportContainer/SubViewport"]
+unique_name_in_owner = true
 script = ExtResource("1_kpppj")
 
 [node name="InputHandler" type="Node" parent="VBoxContainer/SubViewportContainer/SubViewport/Game"]
 script = ExtResource("2_gsqld")
 
-[node name="MainGameInputHandler" type="Node" parent="VBoxContainer/SubViewportContainer/SubViewport/Game/InputHandler"]
+[node name="MainGameInputHandler" type="Node" parent="VBoxContainer/SubViewportContainer/SubViewport/Game/InputHandler" node_paths=PackedStringArray("reticle")]
 script = ExtResource("2_8gkql")
+reticle = NodePath("../../Map/Reticle")
 
 [node name="GameOverInputHandler" type="Node" parent="VBoxContainer/SubViewportContainer/SubViewport/Game/InputHandler"]
 script = ExtResource("3_gddyw")
@@ -105,6 +110,8 @@ script = ExtResource("5_qhm6d")
 
 [node name="MouseoverChecker" type="Node2D" parent="VBoxContainer/SubViewportContainer/SubViewport/Game/Map"]
 script = ExtResource("9_cuurw")
+
+[node name="Reticle" parent="VBoxContainer/SubViewportContainer/SubViewport/Game/Map" instance=ExtResource("11_dgstk")]
 
 [node name="Camera2D" type="Camera2D" parent="VBoxContainer/SubViewportContainer/SubViewport/Game"]
 zoom = Vector2(2, 2)

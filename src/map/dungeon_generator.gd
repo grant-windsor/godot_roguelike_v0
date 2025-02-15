@@ -16,13 +16,6 @@ extends Node
 
 var _rng := RandomNumberGenerator.new()
 
-const entity_types = {
-	"rat": preload("res://assets/definitions/monsters/rat.tres"),
-	"zombie": preload("res://assets/definitions/monsters/zombie.tres"),
-	"medkit": preload("res://assets/definitions/items/health_potion_definition.tres"),
-	"lightning_grenade": preload("res://assets/definitions/items/lightning_grenade_definition.tres")
-}
-
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -33,7 +26,7 @@ func _carve_tile(dungeon: MapData, x: int, y: int) -> void:
 	var tile_position = Vector2i(x,y)
 	var tile: Tile = dungeon.get_tile(tile_position)
 	
-	tile.set_tile_type(dungeon.tile_types.floor)
+	tile.set_tile_type("floor")
 
 
 func _carve_room(dungeon: MapData, room: Rect2i) -> void:
@@ -84,9 +77,9 @@ func _place_entities(dungeon: MapData, room: Rect2i) -> void:
 		if can_place:
 			var new_entity: Entity
 			if _rng.randf() < 0.8:
-				new_entity = Entity.new(dungeon, new_entity_position, entity_types.rat)
+				new_entity = Entity.new(dungeon, new_entity_position, "rat")
 			else:
-				new_entity = Entity.new(dungeon, new_entity_position, entity_types.zombie)
+				new_entity = Entity.new(dungeon, new_entity_position, "zombie")
 			dungeon.entities.append(new_entity)
 
 	for _i in number_of_items:
@@ -104,9 +97,13 @@ func _place_entities(dungeon: MapData, room: Rect2i) -> void:
 			var item_chance: float = _rng.randf()
 			var new_entity: Entity
 			if item_chance < 0.7:
-				new_entity = Entity.new(dungeon, new_entity_position, entity_types.medkit)
+				new_entity = Entity.new(dungeon, new_entity_position, "medkit")
+			elif item_chance < 0.8:
+				new_entity = Entity.new(dungeon, new_entity_position, "fireball_scroll")
+			elif item_chance < 0.9:
+				new_entity = Entity.new(dungeon, new_entity_position, "confusion_scroll")
 			else:
-				new_entity = Entity.new(dungeon, new_entity_position, entity_types.lightning_grenade)
+				new_entity = Entity.new(dungeon, new_entity_position, "lightning_grenade")
 			dungeon.entities.append(new_entity)
 
 

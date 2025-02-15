@@ -9,6 +9,6 @@ func perform() -> bool:
 	if not destination_tile or not destination_tile.is_walkable() or get_blocking_entity_at_destination():
 		if entity == get_map_data().player:
 			MessageLog.send_message("That way is blocked.", GameColors.IMPOSSIBLE)
-			return false
+		return false
 	entity.move(offset)
 	return true

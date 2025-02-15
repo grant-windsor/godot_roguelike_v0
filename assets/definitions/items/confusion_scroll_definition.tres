@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="EntityDefinition" load_steps=6 format=3 uid="uid://c1n8ilhcy7byq"]
+
+[ext_resource type="Script" path="res://src/entities/actors/components/component_definitions/confusion_consumable_component_definition.gd" id="1_heym8"]
+[ext_resource type="Script" path="res://src/entities/entity_definition.gd" id="1_xwoha"]
+[ext_resource type="Texture2D" uid="uid://drjbefgnsj1xu" path="res://assets/curses_vector_24x36.png" id="3_gsuip"]
+
+[sub_resource type="Resource" id="Resource_o2i32"]
+script = ExtResource("1_heym8")
+number_of_turns = 10
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jpmyr"]
+atlas = ExtResource("3_gsuip")
+region = Rect2(336, 252, 24, 36)
+
+[resource]
+script = ExtResource("1_xwoha")
+name = "Confusion Scroll"
+texture = SubResource("AtlasTexture_jpmyr")
+color = Color(0.811765, 0.247059, 1, 1)
+is_blocking_movement = false
+type = 1
+ai_type = 0
+consumable_definition = SubResource("Resource_o2i32")
+inventory_capacity = 0
