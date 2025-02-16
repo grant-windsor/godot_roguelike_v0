@@ -10,11 +10,11 @@ var hp: int:
 		hp = clampi(value, 0, max_hp)
 		hp_changed.emit(hp, max_hp)
 		if hp <= 0:
-			var die_silently := false
+			var trigger_side_effects := true
 			if not is_inside_tree():
-				die_silently = true
+				trigger_side_effects = false
 				await ready
-			die(die_silently)
+			die(trigger_side_effects)
 var defense: int
 var power: int
 
@@ -47,8 +47,10 @@ func heal(amount: int) -> int:
 func take_damage(amount: int) -> void:
 	hp -= amount
 
-
-func die(die_silently := false) -> void:
+# TODO: think about better decoupling and dependency handling.
+# Since fighterComponent expects a levelComponent, adding an entity with
+# a fighterComponent and no levelComponent will crash the game
+func die(trigger_side_effects := true) -> void:
 	var death_message: String
 	var death_message_color: Color
 
@@ -60,18 +62,17 @@ func die(die_silently := false) -> void:
 		death_message = "The %s dies!" % entity.get_entity_name()
 		death_message_color = GameColors.ENEMY_DIE
 
-	if !die_silently:
+	if trigger_side_effects:
 		MessageLog.send_message(death_message, death_message_color)
-
+		get_map_data().player.level_component.add_xp(entity.level_component.xp_given)
 	entity.texture = death_texture
 	entity.modulate = death_color
 	entity.ai_component.queue_free()
 	entity.ai_component = null
 	entity.entity_name = "Remains of %s" % entity.entity_name
 	entity.blocks_movement = false
-
-	get_map_data().unregister_blocking_entity(entity)
 	entity.type = Entity.EntityType.CORPSE
+	get_map_data().unregister_blocking_entity(entity)
 
 func get_save_data() -> Dictionary:
 	return {

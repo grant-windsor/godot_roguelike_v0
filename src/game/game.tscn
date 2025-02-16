@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://drgnxlnejcyws"]
+[gd_scene load_steps=29 format=3 uid="uid://drgnxlnejcyws"]
 
 [ext_resource type="Script" path="res://src/game/game_root.gd" id="1_4vsf7"]
 [ext_resource type="Script" path="res://src/game/game.gd" id="1_kpppj"]
@@ -16,6 +16,8 @@
 [ext_resource type="FontFile" uid="uid://c8eleccfxjvht" path="res://assets/fonts/Kenney Pixel Square.ttf" id="10_b3d3j"]
 [ext_resource type="PackedScene" uid="uid://dblocordiclrs" path="res://src/gui/reticle/reticle.tscn" id="11_dgstk"]
 [ext_resource type="Script" path="res://src/gui/message_log.gd" id="11_er25w"]
+[ext_resource type="Script" path="res://src/gui/character_info_box.gd" id="16_qgnwf"]
+[ext_resource type="Script" path="res://src/gui/dungeon_floor_label.gd" id="16_tfvjr"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_0vd13"]
 content_margin_left = 8.0
@@ -39,6 +41,38 @@ bg_color = Color(0, 0.498039, 0, 1)
 font = ExtResource("10_b3d3j")
 outline_size = 4
 outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="GDScript" id="GDScript_hqc20"]
+script/source = "extends MarginContainer
+
+@onready var xp_bar: ProgressBar = $\"%XpBar\"
+@onready var xp_label: Label = $\"%XpLabel\"
+
+func intialize(player: Entity) -> void:
+	if not is_inside_tree():
+		await ready
+	player.level_component.xp_changed.connect(player_xp_changed)
+	var player_xp: int = player.level_component.current_xp
+	var player_max_xp: int = player.level_component.get_experience_to_next_level()
+	player_xp_changed(player_xp, player_max_xp)
+	
+func player_xp_changed(xp: int, max_xp: int) -> void:
+	xp_bar.max_value = max_xp
+	xp_bar.value = xp
+	xp_label.text = \"XP: %d/%d\" % [xp, max_xp]
+"
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ikp83"]
+bg_color = Color(0, 0, 0.498039, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_er5sv"]
+bg_color = Color(0, 0, 1, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_v0yxf"]
+font = ExtResource("10_b3d3j")
+
+[sub_resource type="LabelSettings" id="LabelSettings_jh26t"]
+font = ExtResource("10_b3d3j")
 
 [sub_resource type="LabelSettings" id="LabelSettings_x4l6u"]
 font = ExtResource("10_b3d3j")
@@ -70,7 +104,7 @@ stretch = true
 disable_3d = true
 handle_input_locally = false
 canvas_item_default_texture_filter = 0
-size = Vector2i(1200, 663)
+size = Vector2i(1200, 644)
 render_target_update_mode = 4
 
 [node name="Game" type="Node2D" parent="VBoxContainer/SubViewportContainer/SubViewport"]
@@ -136,6 +170,7 @@ script = ExtResource("9_h1os6")
 [node name="HpBar" type="ProgressBar" parent="VBoxContainer/InfoBar/StatsPanel/VBoxContainer/HpDisplay"]
 unique_name_in_owner = true
 layout_mode = 2
+size_flags_vertical = 1
 theme_override_styles/background = SubResource("StyleBoxFlat_ujipi")
 theme_override_styles/fill = SubResource("StyleBoxFlat_jds37")
 step = 1.0
@@ -147,6 +182,56 @@ layout_mode = 2
 label_settings = SubResource("LabelSettings_4k0j0")
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="XpDisplay" type="MarginContainer" parent="VBoxContainer/InfoBar/StatsPanel/VBoxContainer"]
+layout_mode = 2
+script = SubResource("GDScript_hqc20")
+
+[node name="XpBar" type="ProgressBar" parent="VBoxContainer/InfoBar/StatsPanel/VBoxContainer/XpDisplay"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_styles/background = SubResource("StyleBoxFlat_ikp83")
+theme_override_styles/fill = SubResource("StyleBoxFlat_er5sv")
+step = 1.0
+show_percentage = false
+
+[node name="XpLabel" type="Label" parent="VBoxContainer/InfoBar/StatsPanel/VBoxContainer/XpDisplay"]
+unique_name_in_owner = true
+layout_mode = 2
+label_settings = SubResource("LabelSettings_4k0j0")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CharacterInfoBox" type="HBoxContainer" parent="VBoxContainer/InfoBar/StatsPanel/VBoxContainer"]
+layout_mode = 2
+script = ExtResource("16_qgnwf")
+
+[node name="LevelLabel" type="Label" parent="VBoxContainer/InfoBar/StatsPanel/VBoxContainer/CharacterInfoBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+label_settings = SubResource("LabelSettings_v0yxf")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AttackLabel" type="Label" parent="VBoxContainer/InfoBar/StatsPanel/VBoxContainer/CharacterInfoBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+label_settings = SubResource("LabelSettings_v0yxf")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DefenseLabel" type="Label" parent="VBoxContainer/InfoBar/StatsPanel/VBoxContainer/CharacterInfoBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+label_settings = SubResource("LabelSettings_v0yxf")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DungeonFloorLabel" type="Label" parent="VBoxContainer/InfoBar/StatsPanel/VBoxContainer"]
+layout_mode = 2
+label_settings = SubResource("LabelSettings_jh26t")
+script = ExtResource("16_tfvjr")
 
 [node name="MouseoverLabel" type="Label" parent="VBoxContainer/InfoBar/StatsPanel/VBoxContainer"]
 layout_mode = 2
@@ -171,4 +256,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 
 [connection signal="player_created" from="VBoxContainer/SubViewportContainer/SubViewport/Game" to="VBoxContainer/InfoBar/StatsPanel/VBoxContainer/HpDisplay" method="initialize"]
+[connection signal="player_created" from="VBoxContainer/SubViewportContainer/SubViewport/Game" to="VBoxContainer/InfoBar/StatsPanel/VBoxContainer/XpDisplay" method="intialize"]
+[connection signal="player_created" from="VBoxContainer/SubViewportContainer/SubViewport/Game" to="VBoxContainer/InfoBar/StatsPanel/VBoxContainer/CharacterInfoBox" method="initialize"]
+[connection signal="dungeon_floor_changed" from="VBoxContainer/SubViewportContainer/SubViewport/Game/Map" to="VBoxContainer/InfoBar/StatsPanel/VBoxContainer/DungeonFloorLabel" method="set_dungeon_floor"]
 [connection signal="entities_focussed" from="VBoxContainer/SubViewportContainer/SubViewport/Game/Map/MouseoverChecker" to="VBoxContainer/InfoBar/StatsPanel/VBoxContainer/MouseoverLabel" method="set_text"]

@@ -27,6 +27,8 @@ var fighter_component: FighterComponent
 var ai_component: BaseAIComponent
 var consumable_component: ConsumableComponent
 var inventory_component: InventoryComponent
+var level_component: LevelComponent
+
 var type: EntityType:
     set(value):
         type = value
@@ -39,6 +41,7 @@ func _init(map_data: MapData, start_position: Vector2i, key: String = "") -> voi
     self.map_data = map_data
     if key != "":
         set_entity_type(key)
+
 
 func set_entity_type(key: String) -> void:
     self.key = key
@@ -65,6 +68,10 @@ func set_entity_type(key: String) -> void:
     if entity_definition.inventory_capacity > 0:
         inventory_component = InventoryComponent.new(entity_definition.inventory_capacity)
         add_child(inventory_component)
+    
+    if entity_definition.level_info:
+        level_component = LevelComponent.new(entity_definition.level_info)
+        add_child(level_component)
         
 
 var grid_position: Vector2i:
@@ -72,23 +79,29 @@ var grid_position: Vector2i:
         grid_position = value
         position = Grid.grid_to_world(grid_position)
 
+
 func move(move_offset: Vector2i) -> void:
     map_data.unregister_blocking_entity(self)
     grid_position += move_offset
     map_data.register_blocking_entity(self)
 
+
 func is_blocking_movement() -> bool:
     return blocks_movement
+
 
 func get_entity_name() -> String:
     return entity_name
 
+
 func is_alive() -> bool:
     return ai_component != null
+
 
 func distance(other_position: Vector2i) -> int:
     var relative: Vector2i = other_position - grid_position
     return maxi(abs(relative.x), abs(relative.y))
+
 
 func _handle_consumable(consumable_definition: ConsumableComponentDefinition) -> void:
     if consumable_definition is HealingConsumableComponentDefinition:
@@ -104,6 +117,7 @@ func _handle_consumable(consumable_definition: ConsumableComponentDefinition) ->
         add_child(consumable_component)
     consumable_component.entity = self
 
+
 func get_save_data() -> Dictionary:
     var save_data: Dictionary = {
         "x": grid_position.x,
@@ -116,7 +130,10 @@ func get_save_data() -> Dictionary:
         save_data["ai_component"] = ai_component.get_save_data()
     if inventory_component:
         save_data["inventory_component"] = inventory_component.get_save_data()
+    if level_component:
+        save_data["level_component"] = level_component.get_save_data()
     return save_data
+
 
 func restore(save_data: Dictionary) -> void:
     grid_position = Vector2i(save_data["x"], save_data["y"])
@@ -130,3 +147,5 @@ func restore(save_data: Dictionary) -> void:
             add_child(confused_enemy_ai)
     if inventory_component and save_data.has("inventory_component"):
         inventory_component.restore(save_data["inventory_component"])
+    if level_component and save_data.has("level_component"):
+        inventory_component.restore(save_data["level_component"])

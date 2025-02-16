@@ -4,7 +4,8 @@ extends Sprite2D
 # TODO: switch to enum
 const tile_types = {
 	"floor": preload("res://assets/definitions/tiles/floor.tres"),
-	"wall": preload("res://assets/definitions/tiles/wall.tres")
+	"wall": preload("res://assets/definitions/tiles/wall.tres"),
+	"down_stairs": preload("res://assets/definitions/tiles/down_stairs.tres"), 
 }
 
 var key: String
