@@ -28,7 +28,7 @@ func _ready() -> void:
 	hide()
 	set_physics_process(false)
 
-func select_position(player: Entity, radius: int) -> Vector2i:
+func select_position(player: Actor, radius: int) -> Vector2i:
 	map_data = player.map_data
 	grid_position = player.grid_position
 

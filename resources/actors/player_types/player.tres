@@ -1,0 +1,30 @@
+[gd_resource type="Resource" script_class="ActorDefinition" load_steps=10 format=3 uid="uid://cdf2e6x42rojh"]
+
+[ext_resource type="Script" path="res://src/entities/actors/body_parts/body_part.gd" id="1_arknq"]
+[ext_resource type="Resource" uid="uid://bvmnxpww5qw0o" path="res://resources/body_parts/head.tres" id="2_j8u1a"]
+[ext_resource type="Script" path="res://src/entities/actor_definition.gd" id="2_t2epr"]
+[ext_resource type="Resource" uid="uid://cd5ob6qviauij" path="res://resources/body_parts/body.tres" id="3_xcrgm"]
+[ext_resource type="Resource" uid="uid://boykiiodic8oh" path="res://resources/body_parts/hand.tres" id="4_oc8en"]
+[ext_resource type="Script" path="res://src/entities/actors/components/component_definitions/level_component_definition.gd" id="5_xea01"]
+[ext_resource type="Texture2D" uid="uid://drjbefgnsj1xu" path="res://assets/curses_vector_24x36.png" id="7_jypbp"]
+
+[sub_resource type="Resource" id="Resource_t12jk"]
+script = ExtResource("5_xea01")
+level_up_base = 150
+level_up_factor = 150
+xp_given = 0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_25fpj"]
+atlas = ExtResource("7_jypbp")
+region = Rect2(0, 144, 24, 36)
+
+[resource]
+script = ExtResource("2_t2epr")
+name = "Player"
+texture = SubResource("AtlasTexture_25fpj")
+color = Color(1, 1, 1, 1)
+is_blocking_movement = true
+ai_type = 1
+inventory_capacity = 26
+level_info = SubResource("Resource_t12jk")
+anatomy = Array[ExtResource("1_arknq")]([ExtResource("2_j8u1a"), ExtResource("3_xcrgm"), ExtResource("4_oc8en")])

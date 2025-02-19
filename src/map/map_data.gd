@@ -8,19 +8,21 @@ const entity_pathfinding_weight = 10.0
 var width: int
 var height: int
 var tiles: Array[Tile]
-var entities: Array[Entity]
-var player: Entity
+var items: Array[Item]
+var actors: Array[Actor]
+var player: Actor
 var down_stairs_location: Vector2i
 var current_floor: int = 0
 
 var pathfinder: AStarGrid2D
 
 
-func _init(map_width: int, map_height: int, player: Entity) -> void:
+func _init(map_width: int, map_height: int, player: Actor) -> void:
     width = map_width
     height = map_height
     self.player = player
-    entities = []
+    items = []
+    actors = []
     _setup_tiles()
 
 func _setup_tiles() -> void:
@@ -54,16 +56,16 @@ func is_in_bounds(coordinate: Vector2i) -> bool:
 		and coordinate.y < height
     )
 
-func get_blocking_entity_at_location(grid_position: Vector2i) -> Entity:
-    for entity in entities:
-        if entity.is_blocking_movement() and entity.grid_position == grid_position:
-            return entity
+func get_blocking_actor_at_location(grid_position: Vector2i) -> Actor:
+    for actor in actors:
+        if actor.is_blocking_movement() and actor.grid_position == grid_position:
+            return actor
     return null
 
-func register_blocking_entity(entity: Entity) -> void:
+func register_blocking_actor(entity: Actor) -> void:
     pathfinder.set_point_weight_scale(entity.grid_position, entity_pathfinding_weight)
 
-func unregister_blocking_entity(entity: Entity) -> void:
+func unregister_blocking_actor(entity: Actor) -> void:
     pathfinder.set_point_weight_scale(entity.grid_position, 0)
 
 func setup_pathfinding() -> void:
@@ -75,30 +77,30 @@ func setup_pathfinding() -> void:
             var grid_position := Vector2i(x, y)
             var tile: Tile = get_tile(grid_position)
             pathfinder.set_point_solid(grid_position, not tile.is_walkable())
-    for entity in entities:
-        if entity.is_blocking_movement():
-            register_blocking_entity(entity)
+    for actor in actors:
+        if actor.is_blocking_movement():
+            register_blocking_actor(actor)
 
 
-func get_actors() -> Array[Entity]:
-    var actors: Array[Entity] = []
-    for entity in entities:
-        if entity.is_alive():
-            actors.append(entity)
+func get_actors() -> Array[Actor]:
+    var actors: Array[Actor] = []
+    for actor in actors:
+        if actor.is_alive():
+            actors.append(actor)
     return actors
 
 
-func get_actor_at_location(location: Vector2i) -> Entity:
+func get_actor_at_location(location: Vector2i) -> Actor:
     for actor in get_actors():
         if actor.grid_position == location:
             return actor
     return null
 
-func get_items() -> Array[Entity]:
-    var items: Array[Entity] = []
-    for entity in entities:
-        if entity.consumable_component != null:
-            items.append(entity)
+func get_items() -> Array[Item]:
+    var items: Array[Item] = []
+    for item in items:
+        if item.consumable_component != null:
+            items.append(item)
     return items
 
 func get_save_data() -> Dictionary:
@@ -111,10 +113,12 @@ func get_save_data() -> Dictionary:
         "entities": [],
         "tiles": []
     }
-    for entity in entities:
-        if entity == player:
+    # for item in items:
+        # save_data["items"].append(item.get_save_data())
+    for actor in actors:
+        if actor == player:
             continue
-        save_data["entities"].append(entity.get_save_data())
+        save_data["actors"].append(actor.get_save_data())
     for tile in tiles:
         save_data["tiles"].append(tile.get_save_data())
     return save_data
@@ -130,11 +134,11 @@ func restore(save_data: Dictionary) -> void:
     setup_pathfinding()
     player.restore(save_data["player"])
     player.map_data = self
-    entities = [player]
-    for entity_data in save_data["entities"]:
-        var new_entity := Entity.new(self, Vector2i.ZERO, "")
-        new_entity.restore(entity_data)
-        entities.append(new_entity)
+    actors = [player]
+    for actor_data in save_data["actors"]:
+        var new_actor := Actor.new(self, Vector2i.ZERO)
+        new_actor.restore(actor_data)
+        actors.append(new_actor)
 
 
 func save() -> void:

@@ -15,7 +15,7 @@ var map_data: MapData
 func _ready():
 	SignalBus.player_descended.connect(next_floor)
 
-func generate(player: Entity, current_floor: int = 1) -> void:
+func generate(player: Actor, current_floor: int = 1) -> void:
 	map_data = dungeon_generator.generate_dungeon(player, current_floor)
 	if not map_data.entity_placed.is_connected(entities.add_child):
 		map_data.entity_placed.connect(entities.add_child)
@@ -28,17 +28,17 @@ func _place_tiles() -> void:
 		tiles.add_child(tile)
 
 func _place_entities() -> void:
-	for entity in map_data.entities:
+	for entity in map_data.actors:
 		entities.add_child(entity)
 
 func update_fov(player_position: Vector2i) -> void:
 	field_of_view.update_fov(map_data, player_position, fov_radius)
 
-	for entity in map_data.entities:
+	for entity in map_data.actors:
 		entity.visible = map_data.get_tile(entity.grid_position).is_in_view
 
 func next_floor() -> void:
-	var player: Entity = map_data.player
+	var player: Actor = map_data.player
 	entities.remove_child(player)
 	for entity in entities.get_children():
 		entity.queue_free()
@@ -50,7 +50,7 @@ func next_floor() -> void:
 	update_fov(player.grid_position)
 
 
-func load_game(player: Entity) -> bool:
+func load_game(player: Actor) -> bool:
 	map_data = MapData.new(0, 0, player)
 	map_data.entity_placed.connect(entities.add_child)
 	if not map_data.load_game():

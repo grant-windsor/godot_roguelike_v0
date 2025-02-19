@@ -5,7 +5,7 @@ extends BaseAIComponent
 var path: Array = []
 
 func perform() -> void:
-    var target: Entity = get_map_data().player
+    var target: Actor = get_map_data().player
     var target_grid_position: Vector2i = target.grid_position
     var offset: Vector2i = target_grid_position - entity.grid_position
     var distance: int = max(abs(offset.x), abs(offset.y))

@@ -1,5 +1,5 @@
 class_name LightningDamageConsumableComponent
-extends ConsumableComponent
+extends ConsumableEffectComponent
 
 var damage: int = 0
 var maximum_range: int = 0
@@ -9,7 +9,7 @@ func _init(definition: LightningDamageConsumableComponentDefinition) -> void:
     maximum_range = definition.maximum_range
 
 func activate(action: ItemAction) -> bool:
-    var consumer: Entity = action.entity
+    var consumer: Entity = action.actor
     var target: Entity = null
     var closest_distance: float = maximum_range + 1
     var map_data = consumer.map_data

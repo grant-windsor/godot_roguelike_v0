@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="BodyPart" load_steps=5 format=3 uid="uid://b1pjrl8ga5vdv"]
+
+[ext_resource type="Script" path="res://src/entities/actors/body_parts/body_part.gd" id="1_mntry"]
+[ext_resource type="Script" path="res://src/entities/actors/body_parts/components/slots/slot_component.gd" id="2_eqkgy"]
+
+[sub_resource type="Resource" id="Resource_1rdl1"]
+script = ExtResource("2_eqkgy")
+slot_type = 5
+
+[sub_resource type="Resource" id="Resource_g5u0y"]
+script = ExtResource("2_eqkgy")
+slot_type = 8
+
+[resource]
+script = ExtResource("1_mntry")
+health = 35
+size = 15
+name = "tentacle"
+slots = Array[ExtResource("2_eqkgy")]([SubResource("Resource_1rdl1"), SubResource("Resource_g5u0y")])

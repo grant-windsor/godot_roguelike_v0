@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="BodyPart" load_steps=4 format=3 uid="uid://bvmnxpww5qw0o"]
+
+[ext_resource type="Script" path="res://src/entities/actors/body_parts/body_part.gd" id="1_ger0p"]
+[ext_resource type="Script" path="res://src/entities/actors/body_parts/components/slots/slot_component.gd" id="2_yus73"]
+
+[sub_resource type="Resource" id="Resource_uxkwl"]
+script = ExtResource("2_yus73")
+slot_type = 0
+
+[resource]
+script = ExtResource("1_ger0p")
+health = 30
+size = 10
+name = "Head"
+slots = Array[ExtResource("2_yus73")]([SubResource("Resource_uxkwl")])

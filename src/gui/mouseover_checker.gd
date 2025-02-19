@@ -19,7 +19,7 @@ func get_names_at_location(grid_position: Vector2i) -> String:
 	if not tile or not tile.is_in_view:
 		return entity_names
 	var entities_at_location: Array[Entity] = []
-	for entity in map_data.entities:
+	for entity in map_data.actors:
 		if  entity.grid_position == grid_position:
 			entities_at_location.append(entity)
 	entities_at_location.sort_custom(func(a, b): return a.z_index > b.z_index)

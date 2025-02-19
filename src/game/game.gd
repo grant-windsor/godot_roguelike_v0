@@ -4,7 +4,7 @@ extends Node2D
 
 signal player_created(player)
 
-@onready var player: Entity
+@onready var player: Actor
 @onready var input_handler: InputHandler = $InputHandler
 @onready var map: Map = $Map
 @onready var camera: Camera2D = $Camera2D
@@ -13,7 +13,7 @@ const level_up_menu_scene: PackedScene = preload("res://src/gui/levelup_menu/lev
 
 
 func new_game() -> void:
-	player = Entity.new(null, Vector2i.ZERO, "player")
+	player = Actor.new(null, Vector2i.ZERO, "player")
 	player.level_component.level_up_required.connect(_on_player_level_up_requested)
 	player_created.emit(player)
 	remove_child(camera)
@@ -27,7 +27,7 @@ func new_game() -> void:
 	camera.make_current.call_deferred()
 
 func load_game() -> bool:
-	player = Entity.new(null, Vector2i.ZERO, "")
+	player = Actor.new(null, Vector2i.ZERO, "player")
 	remove_child(camera)
 	player.add_child(camera)
 	if not map.load_game(player):
@@ -52,7 +52,7 @@ func _physics_process(_delta: float) -> void:
 		map.update_fov(player.grid_position)
 
 func _handle_enemy_turns() -> void:
-	for entity in get_map_data().entities:
+	for entity in get_map_data().actors:
 		if entity.is_alive() and entity != player:
 			entity.ai_component.perform()
 

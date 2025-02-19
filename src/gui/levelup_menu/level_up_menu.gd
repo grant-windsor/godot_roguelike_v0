@@ -3,13 +3,13 @@ extends CanvasLayer
 
 signal level_up_completed
 
-var player: Entity
+var player: Actor
 
 @onready var health_upgrade_button: Button = $"%HealthUpgradeButton"
 @onready var power_upgrade_button: Button = $"%PowerUpgradeButton"
 @onready var defense_upgrade_button: Button = $"%DefenseUpgradeButton"
 
-func setup(player: Entity) -> void:
+func setup(player: Actor) -> void:
 	self.player = player
 	var fighter: FighterComponent = player.fighter_component
 	health_upgrade_button.text = "(a) Toughness (+20 HP, from %d)" % fighter.max_hp
