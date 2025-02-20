@@ -58,7 +58,7 @@ func is_in_bounds(coordinate: Vector2i) -> bool:
 
 func get_blocking_actor_at_location(grid_position: Vector2i) -> Actor:
     for actor in actors:
-        if actor.is_blocking_movement() and actor.grid_position == grid_position:
+        if actor.grid_position == grid_position:
             return actor
     return null
 
@@ -78,15 +78,10 @@ func setup_pathfinding() -> void:
             var tile: Tile = get_tile(grid_position)
             pathfinder.set_point_solid(grid_position, not tile.is_walkable())
     for actor in actors:
-        if actor.is_blocking_movement():
-            register_blocking_actor(actor)
+        register_blocking_actor(actor)
 
 
 func get_actors() -> Array[Actor]:
-    var actors: Array[Actor] = []
-    for actor in actors:
-        if actor.is_alive():
-            actors.append(actor)
     return actors
 
 

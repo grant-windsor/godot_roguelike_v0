@@ -9,12 +9,10 @@ var current_level: int = 1
 var current_xp: int = 0
 var level_up_base: int
 var level_up_factor: int
-var xp_given: int
 
-func _init(definition: LevelComponentDefinition):
-    level_up_base = definition.level_up_base
-    level_up_factor = definition.level_up_factor
-    xp_given = definition.xp_given
+func _init(level_up_base, level_up_factor):
+    level_up_base = level_up_base
+    level_up_factor = level_up_factor
 
 
 func get_experience_to_next_level() -> int:
@@ -42,7 +40,7 @@ func increase_level() -> void:
     leveled_up.emit()
 
 func increase_max_hp(amount: int = 20) -> void:
-    var fighter: FighterComponent = entity.fighter_component
+    var fighter: HpComponent = entity.hp_component
     fighter.max_hp += amount
     fighter.hp += amount
 
@@ -50,16 +48,10 @@ func increase_max_hp(amount: int = 20) -> void:
     increase_level()
 
 func increase_power(amount: int = 1) -> void:
-    var fighter: FighterComponent = entity.fighter_component
-    fighter.power += amount
-	
     MessageLog.send_message("You feel stronger!", Color.WHITE)
     increase_level()
 
 func increase_defense(amount: int = 1) -> void:
-    var fighter: FighterComponent = entity.fighter_component
-    fighter.defense += amount
-	
     MessageLog.send_message("Your movements are getting swifter!", Color.WHITE)
     increase_level()
 
@@ -69,7 +61,6 @@ func get_save_data() -> Dictionary:
         "current_xp": current_xp,
 		"level_up_base": level_up_base,
 		"level_up_factor": level_up_factor,
-		"xp_given": xp_given
     }
 
 func restore(save_data: Dictionary) -> void:
@@ -77,4 +68,3 @@ func restore(save_data: Dictionary) -> void:
     current_xp = save_data["current_xp"]
     level_up_base = save_data["level_up_base"]
     level_up_factor = save_data["level_up_factor"]
-    xp_given = save_data["xp_given"]

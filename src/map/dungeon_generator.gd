@@ -77,9 +77,9 @@ func _place_actors(dungeon: MapData, room: Rect2i) -> void:
 		if can_place:
 			var new_actor: Actor
 			if _rng.randf() < 0.8:
-				new_actor = Actor.new(dungeon, new_actor_position, "rat")
+				new_actor = Enemy.new(dungeon, new_actor_position, "rat")
 			else:
-				new_actor = Actor.new(dungeon, new_actor_position, "zombie")
+				new_actor = Enemy.new(dungeon, new_actor_position, "wretch")
 			dungeon.actors.append(new_actor)
 
 	# for _i in number_of_items:

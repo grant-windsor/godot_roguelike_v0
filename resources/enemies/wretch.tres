@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="EnemyDefinition" load_steps=4 format=3 uid="uid://b8dvu1vdwx7fx"]
+
+[ext_resource type="Script" path="res://src/entities/enemy_definition.gd" id="1_j2apn"]
+[ext_resource type="Texture2D" uid="uid://drjbefgnsj1xu" path="res://assets/curses_vector_24x36.png" id="2_2kqwi"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kn1n2"]
+atlas = ExtResource("2_2kqwi")
+region = Rect2(168, 252, 24, 36)
+
+[resource]
+script = ExtResource("1_j2apn")
+name = "Wretch"
+texture = SubResource("AtlasTexture_kn1n2")
+color = Color(0.62493, 0.699385, 0.795011, 1)
+hp = 20
+size = 100
+ev = 0
+ac = 5
+armor_coverage = 90

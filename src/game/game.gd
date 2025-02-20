@@ -13,7 +13,7 @@ const level_up_menu_scene: PackedScene = preload("res://src/gui/levelup_menu/lev
 
 
 func new_game() -> void:
-	player = Actor.new(null, Vector2i.ZERO, "player")
+	player = Player.new(null, Vector2i.ZERO)
 	player.level_component.level_up_required.connect(_on_player_level_up_requested)
 	player_created.emit(player)
 	remove_child(camera)
@@ -27,7 +27,7 @@ func new_game() -> void:
 	camera.make_current.call_deferred()
 
 func load_game() -> bool:
-	player = Actor.new(null, Vector2i.ZERO, "player")
+	player = Player.new(null, Vector2i.ZERO)
 	remove_child(camera)
 	player.add_child(camera)
 	if not map.load_game(player):

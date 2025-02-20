@@ -1,7 +1,0 @@
-[gd_resource type="Resource" script_class="SlotComponent" load_steps=2 format=3 uid="uid://c65a5tufduhdr"]
-
-[ext_resource type="Script" path="res://src/entities/actors/body_parts/components/slots/slot_component.gd" id="1_x8rmi"]
-
-[resource]
-script = ExtResource("1_x8rmi")
-slot_type = 0

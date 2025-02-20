@@ -11,7 +11,7 @@ var player: Actor
 
 func setup(player: Actor) -> void:
 	self.player = player
-	var fighter: FighterComponent = player.fighter_component
+	var fighter: HpComponent = player.fighter_component
 	health_upgrade_button.text = "(a) Toughness (+20 HP, from %d)" % fighter.max_hp
 	power_upgrade_button.text = "(b) Strength (+1 attack, from %d)" % fighter.power
 	defense_upgrade_button.text = "(c) Agility (+1 defense, from %d)" % fighter.defense

@@ -8,7 +8,7 @@ func perform() -> bool:
             MessageLog.send_message("Nothing to attack.", GameColors.IMPOSSIBLE)
             return false
 
-    var damage: int = actor.fighter_component.power - target.fighter_component.defense
+    var damage: int = 3
     var attack_color: Color
     if actor == get_map_data().player:
         attack_color = GameColors.PLAYER_ATTACK        
@@ -19,7 +19,7 @@ func perform() -> bool:
     if damage > 0:
         attack_description += " for %d hit points." % damage
         MessageLog.send_message(attack_description, attack_color)
-        target.fighter_component.hp -= damage
+        target.hp_component.take_damage(damage)
     else:
         attack_description += " but does no damage."
         MessageLog.send_message(attack_description, attack_color)
