@@ -1,5 +1,5 @@
 class_name ConfusionConsumableComponent
-extends ConsumableComponent
+extends ConsumableEffectComponent
 
 var number_of_turns: int
 
@@ -12,8 +12,8 @@ func get_targeting_radius() -> int:
 	return 0
 
 func activate(action: ItemAction) -> bool:
-	var consumer: Entity = action.entity
-	var target: Entity = action.get_target_actor()
+	var consumer: Actor = action.actor
+	var target: Actor = action.get_target_actor()
 	var map_data: MapData = consumer.map_data
 
 	if not map_data.get_tile(action.target_position).is_in_view:

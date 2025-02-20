@@ -22,8 +22,8 @@ func _ready() -> void:
 	SignalBus.player_died.connect(transition_to.bind(InputHandlers.GAME_OVER))
 
 
-func get_action(player: Entity) -> Action:
-	return await current_input_handler.get_action(player)
+func get_action(player: Actor) -> Action:
+	return current_input_handler.get_action(player)
 
 
 func transition_to(input_handler: InputHandlers) -> void:

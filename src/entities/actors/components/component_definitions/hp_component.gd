@@ -1,4 +1,4 @@
-class_name FighterComponent
+class_name HpComponent
 extends Component
 
 
@@ -15,19 +15,11 @@ var hp: int:
 				trigger_side_effects = false
 				await ready
 			die(trigger_side_effects)
-var defense: int
-var power: int
 
-var death_texture: Texture
-var death_color: Color
 
-func _init(definition: FighterComponentDefinition) -> void:
-	max_hp = definition.max_hp
-	hp = definition.max_hp
-	defense = definition.defense
-	power = definition.power
-	death_texture = definition.death_texture
-	death_color = definition.death_color
+func _init(starting_hp: int) -> void:
+	max_hp = max_hp
+	hp = max_hp
 
 
 func heal(amount: int) -> int:
@@ -47,9 +39,12 @@ func heal(amount: int) -> int:
 func take_damage(amount: int) -> void:
 	hp -= amount
 
-# TODO: think about better decoupling and dependency handling.
-# Since fighterComponent expects a levelComponent, adding an entity with
-# a fighterComponent and no levelComponent will crash the game
+
+func increase_max_hp(amount: int) -> void:
+	max_hp += amount
+	hp += amount
+
+# TODO: convert to corpse item
 func die(trigger_side_effects := true) -> void:
 	var death_message: String
 	var death_message_color: Color
@@ -64,26 +59,29 @@ func die(trigger_side_effects := true) -> void:
 
 	if trigger_side_effects:
 		MessageLog.send_message(death_message, death_message_color)
-		get_map_data().player.level_component.add_xp(entity.level_component.xp_given)
-	entity.texture = death_texture
-	entity.modulate = death_color
-	entity.ai_component.queue_free()
-	entity.ai_component = null
+
+
 	entity.entity_name = "Remains of %s" % entity.entity_name
 	entity.blocks_movement = false
-	entity.type = Entity.EntityType.CORPSE
 	get_map_data().unregister_blocking_entity(entity)
+
+	#TODO: Add this logic back in somewhere
+	# entity.texture = death_texture
+	# entity.modulate = death_color
+	# entity.ai_component.queue_free()
+	# entity.ai_component = null
+	# get_map_data().player.level_component.add_xp(entity.level_component.xp_given)
+
+
+func is_alive() -> bool:
+	return hp > 0
 
 func get_save_data() -> Dictionary:
 	return {
 		"max_hp": max_hp,
 		"hp": hp,
-		"power": power,
-		"defense": defense
 	}
 
 func restore(save_data: Dictionary) -> void:
 	max_hp = save_data["max_hp"]
 	hp = save_data["hp"]
-	power = save_data["power"]
-	defense = save_data["defense"]

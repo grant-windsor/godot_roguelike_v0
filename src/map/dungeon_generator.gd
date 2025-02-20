@@ -59,58 +59,58 @@ func _tunnel_between(dungeon: MapData, start: Vector2i, end: Vector2i) -> void:
 		_tunnel_horizontal(dungeon, start.y, start.x, end.x)
 
 
-func _place_entities(dungeon: MapData, room: Rect2i) -> void:
+func _place_actors(dungeon: MapData, room: Rect2i) -> void:
 	var number_of_monsters: int = _rng.randi_range(0, max_monsters_per_room)
 	var number_of_items: int = _rng.randi_range(0, max_items_per_room)
 
 	for _i in number_of_monsters:
 		var x: int = _rng.randi_range(room.position.x + 1, room.end.x - 1)
 		var y: int = _rng.randi_range(room.position.y + 1, room.end.y - 1)
-		var new_entity_position := Vector2i(x, y)
+		var new_actor_position := Vector2i(x, y)
 
 		var can_place = true
-		for entity in dungeon.entities:
-			if entity.grid_position == new_entity_position:
+		for actor in dungeon.actors:
+			if actor.grid_position == new_actor_position:
 				can_place = false
 				break
 		
 		if can_place:
-			var new_entity: Entity
+			var new_actor: Actor
 			if _rng.randf() < 0.8:
-				new_entity = Entity.new(dungeon, new_entity_position, "rat")
+				new_actor = Enemy.new(dungeon, new_actor_position, "rat")
 			else:
-				new_entity = Entity.new(dungeon, new_entity_position, "zombie")
-			dungeon.entities.append(new_entity)
+				new_actor = Enemy.new(dungeon, new_actor_position, "wretch")
+			dungeon.actors.append(new_actor)
 
-	for _i in number_of_items:
-		var x: int = _rng.randi_range(room.position.x + 1, room.end.x - 1)
-		var y: int = _rng.randi_range(room.position.y + 1, room.end.y - 1)
-		var new_entity_position := Vector2i(x, y)
+	# for _i in number_of_items:
+	# 	var x: int = _rng.randi_range(room.position.x + 1, room.end.x - 1)
+	# 	var y: int = _rng.randi_range(room.position.y + 1, room.end.y - 1)
+	# 	var new_item_position := Vector2i(x, y)
 
-		var can_place = true
-		for entity in dungeon.entities:
-			if entity.grid_position == new_entity_position:
-				can_place = false
-				break
+	# 	var can_place = true
+	# 	for entity in dungeon.entities:
+	# 		if entity.grid_position == new_item_position:
+	# 			can_place = false
+	# 			break
 
-		if can_place:
-			var item_chance: float = _rng.randf()
-			var new_entity: Entity
-			if item_chance < 0.7:
-				new_entity = Entity.new(dungeon, new_entity_position, "medkit")
-			elif item_chance < 0.8:
-				new_entity = Entity.new(dungeon, new_entity_position, "fireball_scroll")
-			elif item_chance < 0.9:
-				new_entity = Entity.new(dungeon, new_entity_position, "confusion_scroll")
-			else:
-				new_entity = Entity.new(dungeon, new_entity_position, "lightning_grenade")
-			dungeon.entities.append(new_entity)
+	# 	if can_place:
+	# 		var item_chance: float = _rng.randf()
+	# 		var new_item: Item
+	# 		if item_chance < 0.7:
+	# 			new_item = Item.new(dungeon, new_item_position, "medkit")
+	# 		elif item_chance < 0.8:
+	# 			new_item = Item.new(dungeon, new_item_position, "fireball_scroll")
+	# 		elif item_chance < 0.9:
+	# 			new_item = Item.new(dungeon, new_item_position, "confusion_scroll")
+	# 		else:
+	# 			new_item = Item.new(dungeon, new_item_position, "lightning_grenade")
+	# 		dungeon.entities.append(new_item)
 
 
-func generate_dungeon(player: Entity, current_floor: int) -> MapData:
+func generate_dungeon(player: Actor, current_floor: int) -> MapData:
 	var dungeon := MapData.new(map_width, map_height, player)
 	dungeon.current_floor = current_floor
-	dungeon.entities.append(player)
+	dungeon.actors.append(player)
 
 	var rooms: Array[Rect2i] = []
 	var center_last_room: Vector2i
@@ -142,7 +142,7 @@ func generate_dungeon(player: Entity, current_floor: int) -> MapData:
 			player.map_data = dungeon
 		else:
 			_tunnel_between(dungeon, rooms.back().get_center(), new_room.get_center())
-		_place_entities(dungeon, new_room)
+		_place_actors(dungeon, new_room)
 
 		rooms.append(new_room)
 	

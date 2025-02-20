@@ -10,5 +10,5 @@ func exit() -> void:
     pass
 
 
-func get_action(player: Entity) -> Action:
+func get_action(player: Actor) -> Action:
     return null

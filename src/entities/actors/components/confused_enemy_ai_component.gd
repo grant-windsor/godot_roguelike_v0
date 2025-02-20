@@ -5,7 +5,7 @@ var previous_ai: BaseAIComponent
 var turns_remaining: int
 
 
-# "it would have been pretty clever to actually handle attatching components like this for all components, but I only realized that at this point"
+# "it would have been pretty clever to actually handle attaching components like this for all components, but I only realized that at this point"
 func _ready():
     previous_ai = entity.ai_component
     entity.ai_component = self

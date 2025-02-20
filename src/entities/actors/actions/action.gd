@@ -1,11 +1,11 @@
 class_name Action
 extends RefCounted
 
-var entity: Entity
+var actor: Actor
 
 
-func _init(entity: Entity) -> void:
-    self.entity = entity
+func _init(entity: Actor) -> void:
+    self.actor = entity
 
 
 func perform() -> bool:
@@ -13,4 +13,4 @@ func perform() -> bool:
 
 
 func get_map_data() -> MapData:
-    return entity.map_data
+    return actor.map_data

@@ -17,7 +17,7 @@ func exit() -> void:
 	message_panel.self_modulate = Color.WHITE
 
 
-func get_action(player: Entity) -> Action:
+func get_action(player: Actor) -> Action:
 	var action: Action
 	
 	if Input.is_action_just_pressed("move_up"):

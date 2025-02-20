@@ -1,13 +1,13 @@
 extends HBoxContainer
 
-var _player: Entity
+var _player: Actor
 
 @onready var level_label: Label = $LevelLabel
 @onready var attack_label: Label = $AttackLabel
 @onready var defense_label: Label = $DefenseLabel
 
 
-func initialize(player: Entity) -> void:
+func initialize(player: Actor) -> void:
 	_player = player
 	_player.level_component.leveled_up.connect(update_labels)
 	update_labels()

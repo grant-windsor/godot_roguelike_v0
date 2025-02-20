@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="EnemyDefinition" load_steps=4 format=3 uid="uid://d0pf4fhmuoba6"]
+
+[ext_resource type="Script" path="res://src/entities/enemy_definition.gd" id="1_54a6p"]
+[ext_resource type="Texture2D" uid="uid://drjbefgnsj1xu" path="res://assets/curses_vector_24x36.png" id="2_e0tk2"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rnfha"]
+atlas = ExtResource("2_e0tk2")
+region = Rect2(48, 252, 24, 36)
+
+[resource]
+script = ExtResource("1_54a6p")
+name = "Lab Rat"
+texture = SubResource("AtlasTexture_rnfha")
+color = Color(0.902372, 0.663604, 0.468967, 1)
+hp = 10
+size = 30
+ev = 5
+ac = 0
+armor_coverage = 0
