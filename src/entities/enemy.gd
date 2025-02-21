@@ -14,7 +14,6 @@ const enemy_types = {
     "wretch": "res://resources/enemies/wretch.tres"
 }
 
-var key: String
 
 func _init(map: MapData, start_position: Vector2i, key: String):
     super(map, start_position)
@@ -22,16 +21,16 @@ func _init(map: MapData, start_position: Vector2i, key: String):
 
 
 func setup(key: String) -> void:
-    self.key = key
     var definition: EnemyDefinition = load(enemy_types[key])
     _enemy_definition = definition
     entity_name = definition.name
     texture = definition.texture
     modulate = definition.color
 
-    hp_component = HpComponent.new(definition.hp)
+    hp_component = HpComponent.new(self, definition.hp)
+    melee_attack_component = MeleeAttackComponent.new(self)
 
-    # match _enemy_definition.ai_type:
-    #     AIType.HOSTILE:
-    #         ai_component = HostileEnemyAIComponent.new()
-    #         add_child(ai_component)
+    match _enemy_definition.ai_type:
+        AIType.HOSTILE:
+            ai_component = HostileEnemyAIComponent.new(self)
+            add_child(ai_component)

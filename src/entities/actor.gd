@@ -2,6 +2,7 @@ class_name Actor
 extends Entity
 
 var hp_component: HpComponent
+var melee_attack_component: MeleeAttackComponent
 
 func _init(map: MapData, start_position: Vector2i) -> void:
     centered = false
@@ -21,3 +22,9 @@ func distance(other_position: Vector2i) -> int:
 
 func is_alive() -> bool:
     return hp_component.is_alive()
+
+func heal(amount: int) -> int:
+    return hp_component.heal(amount)
+
+func attack(target: Actor) -> void:
+    melee_attack_component.attack(target)

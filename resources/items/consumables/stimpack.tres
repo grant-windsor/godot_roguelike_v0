@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="ConsumableItemDefinition" load_steps=6 format=3 uid="uid://c4uwhn6d123lw"]
+
+[ext_resource type="Script" path="res://src/entities/items/consumable_item_definition.gd" id="1_a4wr4"]
+[ext_resource type="Script" path="res://src/entities/actors/components/component_definitions/healing_consumable_component_definition.gd" id="1_rjbim"]
+[ext_resource type="Texture2D" uid="uid://drjbefgnsj1xu" path="res://assets/curses_vector_24x36.png" id="3_7jyve"]
+
+[sub_resource type="Resource" id="Resource_b8ek8"]
+script = ExtResource("1_rjbim")
+healing_amount = 4
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7x1ug"]
+atlas = ExtResource("3_7jyve")
+region = Rect2(264, 72, 24, 36)
+
+[resource]
+script = ExtResource("1_a4wr4")
+name = "Stimpack"
+texture = SubResource("AtlasTexture_7x1ug")
+color = Color(1, 0, 0, 1)
+effect = SubResource("Resource_b8ek8")

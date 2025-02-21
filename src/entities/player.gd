@@ -8,7 +8,7 @@ var encumbrance: int
 var ac: int
 var ev: int
 var armor_coverage: int
-var inventory: InventoryComponent
+var inventory_component: InventoryComponent
 var level_component: LevelComponent
 
 
@@ -27,9 +27,10 @@ func _init(map: MapData, start_position: Vector2i) -> void:
     texture = definition.texture
     modulate = definition.color
     
-    hp_component = HpComponent.new(30)
-    inventory = InventoryComponent.new(26)
-    level_component = LevelComponent.new(150, 150)
+    hp_component = HpComponent.new(self, 100)
+    inventory_component = InventoryComponent.new(self, 26)
+    level_component = LevelComponent.new(self, 150, 150)
+    melee_attack_component = MeleeAttackComponent.new(self)
 
 
 

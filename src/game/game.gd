@@ -52,9 +52,9 @@ func _physics_process(_delta: float) -> void:
 		map.update_fov(player.grid_position)
 
 func _handle_enemy_turns() -> void:
-	for entity in get_map_data().actors:
-		if entity.is_alive() and entity != player:
-			entity.ai_component.perform()
+	for actor in get_map_data().actors:
+		if actor.is_alive() and actor != player:
+			actor.ai_component.perform()
 
 func get_map_data() -> MapData:
 	return map.map_data

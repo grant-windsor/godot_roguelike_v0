@@ -1,7 +1,10 @@
 class_name ConsumableEffectComponent
 extends Node
 
-@onready var item: Item = get_parent() as Item
+@onready var parent: ConsumableItem
 
-func _ready():
-    item.effect_component = self
+func _init(entity: ConsumableItem):
+    parent = entity
+
+func get_map_data() -> MapData:
+    return parent.map_data

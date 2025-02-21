@@ -5,7 +5,8 @@ var items: Array[Item]
 var capacity: int
 
 
-func _init(capacity: int) -> void:
+func _init(entity: Entity, capacity: int) -> void:
+	super(entity)
 	items = []
 	self.capacity = capacity
 
@@ -16,7 +17,7 @@ func drop(item: Item) -> void:
 	map_data.items.append(item)
 	map_data.entity_placed.emit(item)
 	item.map_data = map_data
-	item.grid_position = entity.grid_position
+	item.grid_position = parent.grid_position
 	MessageLog.send_message("You dropped the %s." % item.get_entity_name(), Color.WHITE)
 
 
@@ -29,9 +30,9 @@ func get_save_data() -> Dictionary:
 		save_data["items"].append(item.get_save_data())
 	return save_data
 
-func restore(save_data: Dictionary) -> void:
-	capacity = save_data["capacity"]
-	for item_data in save_data["items"]:
-		var item: Item = Item.new(null, Vector2i(-1, -1))
-		item.restore(item_data)
-		items.append(item)
+# func restore(save_data: Dictionary) -> void:
+# 	capacity = save_data["capacity"]
+# 	for item_data in save_data["items"]:
+# 		var item: Item = Item.new(null, Vector2i(-1, -1),)
+# 		item.restore(item_data)
+# 		items.append(item)

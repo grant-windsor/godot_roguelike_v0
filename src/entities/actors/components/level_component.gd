@@ -10,7 +10,8 @@ var current_xp: int = 0
 var level_up_base: int
 var level_up_factor: int
 
-func _init(level_up_base, level_up_factor):
+func _init(entity: Entity, level_up_base: int, level_up_factor: int):
+    super(entity)
     level_up_base = level_up_base
     level_up_factor = level_up_factor
 
@@ -40,7 +41,7 @@ func increase_level() -> void:
     leveled_up.emit()
 
 func increase_max_hp(amount: int = 20) -> void:
-    var fighter: HpComponent = entity.hp_component
+    var fighter: HpComponent = parent.hp_component
     fighter.max_hp += amount
     fighter.hp += amount
 

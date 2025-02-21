@@ -61,7 +61,6 @@ func _tunnel_between(dungeon: MapData, start: Vector2i, end: Vector2i) -> void:
 
 func _place_actors(dungeon: MapData, room: Rect2i) -> void:
 	var number_of_monsters: int = _rng.randi_range(0, max_monsters_per_room)
-	var number_of_items: int = _rng.randi_range(0, max_items_per_room)
 
 	for _i in number_of_monsters:
 		var x: int = _rng.randi_range(room.position.x + 1, room.end.x - 1)
@@ -82,29 +81,33 @@ func _place_actors(dungeon: MapData, room: Rect2i) -> void:
 				new_actor = Enemy.new(dungeon, new_actor_position, "wretch")
 			dungeon.actors.append(new_actor)
 
-	# for _i in number_of_items:
-	# 	var x: int = _rng.randi_range(room.position.x + 1, room.end.x - 1)
-	# 	var y: int = _rng.randi_range(room.position.y + 1, room.end.y - 1)
-	# 	var new_item_position := Vector2i(x, y)
 
-	# 	var can_place = true
-	# 	for entity in dungeon.entities:
-	# 		if entity.grid_position == new_item_position:
-	# 			can_place = false
-	# 			break
+func _place_items(dungeon: MapData, room: Rect2i) -> void:
+	var number_of_items: int = _rng.randi_range(0, max_items_per_room)
 
-	# 	if can_place:
-	# 		var item_chance: float = _rng.randf()
-	# 		var new_item: Item
-	# 		if item_chance < 0.7:
-	# 			new_item = Item.new(dungeon, new_item_position, "medkit")
-	# 		elif item_chance < 0.8:
-	# 			new_item = Item.new(dungeon, new_item_position, "fireball_scroll")
-	# 		elif item_chance < 0.9:
-	# 			new_item = Item.new(dungeon, new_item_position, "confusion_scroll")
-	# 		else:
-	# 			new_item = Item.new(dungeon, new_item_position, "lightning_grenade")
-	# 		dungeon.entities.append(new_item)
+	for _i in number_of_items:
+		var x: int = _rng.randi_range(room.position.x + 1, room.end.x - 1)
+		var y: int = _rng.randi_range(room.position.y + 1, room.end.y - 1)
+		var new_item_position := Vector2i(x, y)
+
+		var can_place = true
+		for item in dungeon.items:
+			if item.grid_position == new_item_position:
+				can_place = false
+				break
+
+		if can_place:
+			var item_chance: float = _rng.randf()
+			var new_item: Item
+			if item_chance < 1.0:
+				new_item = Item.new(dungeon, new_item_position, "stimpack")
+			# elif item_chance < 0.8:
+			# 	new_item = Item.new(dungeon, new_item_position, "fireball_scroll")
+			# elif item_chance < 0.9:
+			# 	new_item = Item.new(dungeon, new_item_position, "confusion_scroll")
+			# else:
+			# 	new_item = Item.new(dungeon, new_item_position, "lightning_grenade")
+			dungeon.items.append(new_item)
 
 
 func generate_dungeon(player: Actor, current_floor: int) -> MapData:
@@ -143,6 +146,7 @@ func generate_dungeon(player: Actor, current_floor: int) -> MapData:
 		else:
 			_tunnel_between(dungeon, rooms.back().get_center(), new_room.get_center())
 		_place_actors(dungeon, new_room)
+		_place_items(dungeon, new_room)
 
 		rooms.append(new_room)
 	

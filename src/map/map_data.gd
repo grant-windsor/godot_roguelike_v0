@@ -92,10 +92,6 @@ func get_actor_at_location(location: Vector2i) -> Actor:
     return null
 
 func get_items() -> Array[Item]:
-    var items: Array[Item] = []
-    for item in items:
-        if item.consumable_component != null:
-            items.append(item)
     return items
 
 func get_save_data() -> Dictionary:

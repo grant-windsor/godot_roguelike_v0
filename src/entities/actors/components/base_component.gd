@@ -1,8 +1,10 @@
 class_name Component
 extends Node
 
-@onready var entity: Actor = get_parent() as Actor
+@onready var parent: Entity
 
+func _init(entity: Entity):
+    parent = entity
 
 func get_map_data() -> MapData:
-    return entity.map_data
+    return parent.map_data

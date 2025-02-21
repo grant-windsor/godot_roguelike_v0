@@ -11,14 +11,12 @@ var hp: int:
 		hp_changed.emit(hp, max_hp)
 		if hp <= 0:
 			var trigger_side_effects := true
-			if not is_inside_tree():
-				trigger_side_effects = false
-				await ready
 			die(trigger_side_effects)
 
 
-func _init(starting_hp: int) -> void:
-	max_hp = max_hp
+func _init(entity: Entity, starting_hp: int) -> void:
+	super(entity)
+	max_hp = starting_hp
 	hp = max_hp
 
 
@@ -49,21 +47,20 @@ func die(trigger_side_effects := true) -> void:
 	var death_message: String
 	var death_message_color: Color
 
-	if get_map_data().player == entity:
+	if get_map_data().player == parent:
 		death_message = "rip"
 		death_message_color = GameColors.PLAYER_DIE
 		SignalBus.player_died.emit()
 	else:
-		death_message = "The %s dies!" % entity.get_entity_name()
+		death_message = "The %s dies!" % parent.get_entity_name()
 		death_message_color = GameColors.ENEMY_DIE
 
 	if trigger_side_effects:
 		MessageLog.send_message(death_message, death_message_color)
 
 
-	entity.entity_name = "Remains of %s" % entity.entity_name
-	entity.blocks_movement = false
-	get_map_data().unregister_blocking_entity(entity)
+	parent.entity_name = "Remains of %s" % parent.entity_name
+	# get_map_data().unregister_blocking_entity(parent)
 
 	#TODO: Add this logic back in somewhere
 	# entity.texture = death_texture

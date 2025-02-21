@@ -16,4 +16,4 @@ extends Resource
 @export_category("Items")
 
 @export_category("Components")
-# @export var ai_type: enum
+@export var ai_type: Enemy.AIType = 1
