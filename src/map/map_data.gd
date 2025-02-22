@@ -62,10 +62,10 @@ func get_blocking_actor_at_location(grid_position: Vector2i) -> Actor:
             return actor
     return null
 
-func register_blocking_actor(entity: Actor) -> void:
+func register_blocking_entity(entity: Actor) -> void:
     pathfinder.set_point_weight_scale(entity.grid_position, entity_pathfinding_weight)
 
-func unregister_blocking_actor(entity: Actor) -> void:
+func unregister_blocking_entity(entity: Actor) -> void:
     pathfinder.set_point_weight_scale(entity.grid_position, 0)
 
 func setup_pathfinding() -> void:
@@ -78,7 +78,7 @@ func setup_pathfinding() -> void:
             var tile: Tile = get_tile(grid_position)
             pathfinder.set_point_solid(grid_position, not tile.is_walkable())
     for actor in actors:
-        register_blocking_actor(actor)
+        register_blocking_entity(actor)
 
 
 func get_actors() -> Array[Actor]:
@@ -91,8 +91,10 @@ func get_actor_at_location(location: Vector2i) -> Actor:
             return actor
     return null
 
+
 func get_items() -> Array[Item]:
     return items
+
 
 func get_save_data() -> Dictionary:
     var save_data := {

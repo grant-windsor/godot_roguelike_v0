@@ -1,2 +1,2 @@
 class_name ConsumableComponentDefinition
-extends ItemComponentDefinition
+extends Resource

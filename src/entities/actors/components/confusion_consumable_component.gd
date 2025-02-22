@@ -1,5 +1,5 @@
 class_name ConfusionConsumableComponent
-extends ConsumableEffectComponent
+extends ConsumableComponent
 
 var number_of_turns: int
 

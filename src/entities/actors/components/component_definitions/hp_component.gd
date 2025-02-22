@@ -42,11 +42,9 @@ func increase_max_hp(amount: int) -> void:
 	max_hp += amount
 	hp += amount
 
-# TODO: convert to corpse item
 func die(trigger_side_effects := true) -> void:
 	var death_message: String
 	var death_message_color: Color
-
 	if get_map_data().player == parent:
 		death_message = "rip"
 		death_message_color = GameColors.PLAYER_DIE
@@ -59,14 +57,10 @@ func die(trigger_side_effects := true) -> void:
 		MessageLog.send_message(death_message, death_message_color)
 
 
-	parent.entity_name = "Remains of %s" % parent.entity_name
-	# get_map_data().unregister_blocking_entity(parent)
+	get_map_data().unregister_blocking_entity(parent)
+	parent.convert_to_corpse()
 
 	#TODO: Add this logic back in somewhere
-	# entity.texture = death_texture
-	# entity.modulate = death_color
-	# entity.ai_component.queue_free()
-	# entity.ai_component = null
 	# get_map_data().player.level_component.add_xp(entity.level_component.xp_given)
 
 

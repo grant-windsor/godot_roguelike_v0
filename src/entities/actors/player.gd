@@ -8,11 +8,12 @@ var encumbrance: int
 var ac: int
 var ev: int
 var armor_coverage: int
+#TODO add quickness, speed, strength, etc
+
 var inventory_component: InventoryComponent
 var level_component: LevelComponent
 
 
-#TODO add quickness, speed, strength, etc
 
 func _init(map: MapData, start_position: Vector2i) -> void:
     super(map, start_position)

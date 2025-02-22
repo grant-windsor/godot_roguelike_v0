@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="EnemyDefinition" load_steps=4 format=3 uid="uid://d0pf4fhmuoba6"]
 
-[ext_resource type="Script" path="res://src/entities/enemy_definition.gd" id="1_54a6p"]
+[ext_resource type="Script" path="res://src/entities/actors/enemy_definition.gd" id="1_54a6p"]
 [ext_resource type="Texture2D" uid="uid://drjbefgnsj1xu" path="res://assets/curses_vector_24x36.png" id="2_e0tk2"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rnfha"]

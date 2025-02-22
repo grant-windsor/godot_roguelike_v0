@@ -1,5 +1,5 @@
 class_name FireballDamageConsumableComponent
-extends ConsumableEffectComponent
+extends ConsumableComponent
 
 var damage: int
 var radius: int

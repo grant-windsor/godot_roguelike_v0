@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ItemDefinition" load_steps=4 format=3 uid="uid://cgequ040phkqc"]
+
+[ext_resource type="Script" path="res://src/entities/items/item_definition.gd" id="1_ygjt1"]
+[ext_resource type="Texture2D" uid="uid://drjbefgnsj1xu" path="res://assets/curses_vector_24x36.png" id="2_8dsj4"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rvntt"]
+atlas = ExtResource("2_8dsj4")
+region = Rect2(120, 72, 24, 36)
+
+[resource]
+script = ExtResource("1_ygjt1")
+name = "corpse"
+texture = SubResource("AtlasTexture_rvntt")
+color = Color(0.62, 0, 0, 1)

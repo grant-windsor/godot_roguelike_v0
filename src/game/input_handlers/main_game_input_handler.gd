@@ -64,8 +64,7 @@ func get_item(window_title: String, inventory: InventoryComponent, evaluate_for_
 	get_parent().transition_to(InputHandler.InputHandlers.DUMMY)
 	var selected_item: Item = await inventory_menu.item_selected
 	var has_item: bool = selected_item != null
-	# TODO: Using items doesn't work. The entire inventory input handling system should probably be reworked
-	var needs_targeting: bool = has_item and selected_item.effect and selected_item.effect.get_targeting_radius() != -1
+	var needs_targeting: bool = has_item and selected_item.consumable_component and selected_item.consumable_component.get_targeting_radius() != -1
 	if not evaluate_for_next_step or not has_item or not needs_targeting:
 		await get_tree().physics_frame
 		get_parent().call_deferred("transition_to", InputHandler.InputHandlers.MAIN_GAME)
